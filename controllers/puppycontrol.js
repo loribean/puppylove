@@ -26,7 +26,7 @@ let postLogIn = (request, response) => {
             let userName = userInfo.username;
             let loginCookie = response.cookie("session",sessionid, { maxAge: 900000});
             let userCookie = response.cookie("userInfo",userName, { maxAge: 900000});
-            response.send("Welcome "+ userName+ '<a href ="/home"> Go to dashboard </a>')
+            response.redirect("/home")
         }
     })
 }
@@ -41,7 +41,7 @@ let postLogInOrg =  (request, response) => {
     let values = [request.body.username,request.body.password];
     db.puppy.postLoginOrg(values,(err,result) =>{
         if(err){
-            console.log('Error at postLogin---', err.message)
+            response.send('Wrong Password?');
         } else {
             let orgInfo = result.rows[0];
             let sessionid = orgInfo.id;
@@ -49,7 +49,7 @@ let postLogInOrg =  (request, response) => {
             let userName = orgInfo.username;
             let loginCookie = response.cookie("sessionOrg",sessionid, { maxAge: 900000});
             let orgCookie = response.cookie("orgInfo",userName, { maxAge: 900000});
-            response.send("Welcome "+ userName+ '<a href ='+url+'> Check your dashboard </a>')
+            response.redirect(`${url}`);
         }
     })
 }

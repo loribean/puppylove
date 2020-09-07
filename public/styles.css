@@ -3,6 +3,21 @@
   --input-padding-y: 0.75rem;
 }
 
+li {
+  list-style-type: none;
+
+}
+
+
+
+body {
+  font-family: 'Lato';
+}
+.newChat{
+	margin-right: 200px;
+}
+
+
 .login,
 .image {
   min-height: 100vh;
@@ -12,6 +27,34 @@
   background-image: url('https://source.unsplash.com/PlVXUUeqeus/600x1200');
   background-size: cover;
   background-position: center;
+}
+
+.btn-m {
+  text-transform: uppercase;
+  padding: 1rem 5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  margin-bottom: 2rem;
+
+}
+
+.rounded-pill {
+  border-radius: 5rem;
+}
+
+.bg-primary {
+  background-color: #27b1b3 !important;
+}
+
+.btn-primary {
+  background-color: #27b1b3;
+  border-color: #27b1b3;
+}
+
+.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+  background-color: #ffbb29!important;
+  border-color: #ffbb29 !important;
 }
 
 .login-heading {

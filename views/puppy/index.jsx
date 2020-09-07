@@ -47,7 +47,7 @@ class Index extends React.Component {
     <div className="masthead-content">
       <div className="container">
         <h1 className="masthead-heading mb-0">Find your Furever</h1>
-        <h2 className="masthead-subheading mb-0">Save a life</h2>
+        <h2 className="masthead-subheading mb-0"></h2>
         <a href="#" className="btn btn-primary btn-xl rounded-pill mt-5">Let's Go!</a>
       </div>
     </div>
@@ -68,7 +68,7 @@ class Index extends React.Component {
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
             <h2 class="display-4">For those looking a cuddle buddy!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            <p>“You think those dogs will not be in heaven! I tell you they will be there long before any of us.” ― Robert Louis Stevenson</p>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ class Index extends React.Component {
         <div class="col-lg-6">
           <div class="p-5">
             <h2 class="display-4">For those looking for a platform to help..</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            <p>“All his life he tried to be a good person. Many times, however, he failed. For after all, he was only human. He wasn’t a dog.” – Charles M Schulz</p>
           </div>
         </div>
       </div>
@@ -104,7 +104,7 @@ class Index extends React.Component {
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
             <h2 class="display-4">Let's get swiping!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            <p>“My main characters are the most sunny, happy, optimistic, loving creatures on the face of the Earth. I couldn’t be happier that’s where I start. I can put as many flawed people in the dog’s world as I like, but the dog doesn’t care. Dog doesn’t judge, dog doesn’t dislike. Dog loves. That’s not so bad.” – Bruce Cameron</p>
           </div>
         </div>
       </div>
