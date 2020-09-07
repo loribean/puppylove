@@ -21,8 +21,9 @@ export default class Timeline extends React.Component {
                     <p>Age:{age}</p>
                     <p>Bio:{description}</p>
                     <p>Image:{image}</p>
-
                     </div>
+
+
                   <br/>
                   <br/>
 

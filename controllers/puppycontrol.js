@@ -269,7 +269,7 @@ let swipe =  (request,response) => {
             let dogCookie = response.cookie("dogCookie",obj.id);
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
-            response.send("out of dogs")
+            response.send("out of dogs to swipe. try again later")
             } else {
                  console.log(populateData, "this is data AFTER function");
 
