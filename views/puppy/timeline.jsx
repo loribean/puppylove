@@ -3,7 +3,7 @@ const React = require('react');
 export default class Timeline extends React.Component {
     render(){
 
-        const {name,age,description,image,id} =this.props;
+        const {name,age,description,image,org_id} =this.props;
 
         return (
         <html>

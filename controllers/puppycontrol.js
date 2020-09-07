@@ -186,109 +186,69 @@ console.log(values)
         })
 
 }
-//helper function to check if user has already swiped on the dog before
 
-// function check (arr,arr2) {
-//                 for(i=0;i<arr.length; i++){
-//                     for(j=0;j<arr2.length; j++){
-//                         if(arr[i].id === arr2[i]){
-//                             arr.shift();
-//                     }
-//                 }
-//             }}
 
-// //helper function to populate the card which is async that awaits
-// async function populate (arr,arr2){
-
-//     let populateObj = await check(arr, arr2);
-
-//     if(arr ===[]){
-//         populateObj = {
-//             id:"Oh no! You have ran out of dogs. Try again later?"
-//         }
-//         return populateObj
-//     } else {
-//          populateObj = {
-//             id : arr[0].id,
-//             name: arr[0].name,
-//             description: arr[0].description,
-//             age: arr[0].age,
-//             img: arr[0].img,
-//             hdb_approved:arr[0].hdb_approved
-//         }
-//     arr.shift();
-//      return populateObj;
-// }
-
-//     }
+//helper function to populate the card which is async that awaits
+function populate (arr){
+    if(arr ===[]){
+        populateObj = {
+            id:"Oh no! You have ran out of dogs. Try again later?"
+        }
+        return populateObj
+    } else {
+         populateObj = {
+            id : arr[0].id,
+            org_id : arr[0].org_id,
+            name: arr[0].name,
+            description: arr[0].description,
+            age: arr[0].age,
+            gender:arr[0].gender,
+            img: arr[0].img,
+            hdb_approved:arr[0].hdb_approved
+        }
+    arr.shift();
+     return populateObj;
+}
+    }
 
 
 let timeline = (request,response) => {
+    let user_id = request.cookies["session"];
+    let values = [user_id];
 
-    db.puppy.getTimeline((err,result)=>{
+    db.puppy.getTimeline(values,(err,result)=>{
         if(err){
             console.log('Error at getTimelineDog---', err.message)
         } else{
             console.log(result.rows)
-
-            response.send("hello world")
+            populateData = result.rows;
+            let obj = populate(populateData);
+            let dogId = obj.id;
+            let dogCookie = response.cookie("dogCookie",dogId);
+            response.render('puppy/timeline',obj)
         }
         })
 
 }
 
-// let timeline = (request,response) => {
-// let matchedIdArray =[];
-// let user_id = request.cookies["session"];
-// let values =[user_id];
-//     db.puppy.getCheckMatches(values,(err,result)=>{
-//         if(err){
-//             console.log('Error at CheckMatchesDog---', err.message)
-//         } else{
-//             console.log(result.rows);
-//             let matchArr = result.rows;
-//             for(i=0; i<matchArr.length; i++){
-//                 if(matchArr[i].follower_user_id === user_id){
-//                     matchedIdArray.push(matchArr[i].dog_id);
-//                     return matchedIdArray
-//                 }
-
-//             }
-//             db.puppy.getTimeline((err,result)=>{
-//         if(err){
-//             console.log('Error at getTimelineDog---', err.message)
-//         } else{
-
-//             populateData = result.rows;
-//             console.log(matchedIdArray)
-//             let obj =  populate(populateData,matchedIdArray);
-//             console.log(obj) //PROBLEM1!1 RETURNS EMPTY ARR. WHY?
-//             // console.log(populateData, "this is data AFTER function");
-//             let dogCookie = response.cookie("dog",obj.id);
-//             response.render('puppy/timeline',obj)
-//         }
-//         })
-//         }
-//         })
-// }
 
 let swipe =  (request,response) => {
     let user_id = request.cookies["session"];
-    let dog_id = request.cookies["dog"];
+    let dog_id = request.cookies["dogCookie"];
     let values = [dog_id,user_id];
-    let arr = [];
 
     if(request.body.swipe === 'like'){
         db.puppy.postSwipeLike(values,(err,result)=>{
             if(err){
                 console.log(err, "err at swipe")
             } else{
-            let obj = populate(populateData,arr);
-            let dogCookie = response.cookie("dog",obj.id);
+            let obj = populate(populateData);
+            let dogCookie = response.cookie("dogCookie",obj.id)
             if(populateData.length <1){
                 response.send("out of dogs")
             }else{
             console.log(populateData, "this is data AFTER function");
+            let dogCookie = response.cookie("dogCookie",obj.id)
             response.render('puppy/timeline',obj)
             }}
         })}
@@ -297,13 +257,14 @@ let swipe =  (request,response) => {
             if(err){
                 console.log(err, "err at swipe")
             } else{
-            check (populateData,matchedIdArray);
+
             let obj = populate(populateData);
-            let dogCookie = response.cookie("dog",obj.id);
+            let dogCookie = response.cookie("dogCookie",obj.id)
             if(populateData.length <1){
             response.send("out of dogs")
             } else {
                  console.log(populateData, "this is data AFTER function");
+
             response.render('puppy/timeline',obj)
             }
 

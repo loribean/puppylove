@@ -38,4 +38,4 @@
 -- INSERT INTO match (dog_id,follower_user_id,liked) VALUES (3,1,true);
 
 
-INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES (4,4,'Mark','shurui','Hey there! Nice to meet you shurui, I am from SOSD and you are interested in Mark?');
+-- INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES (4,4,'Mark','shurui','Hey there! Nice to meet you shurui, I am from SOSD and you are interested in Mark?');

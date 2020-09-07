@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS org (
 
 
 CREATE TABLE IF NOT EXISTS match (
-    id SERIAL PRIMARY KEY,
+    match_id SERIAL PRIMARY KEY,
     dog_id INTEGER,
     follower_user_id INTEGER,
     liked boolean null

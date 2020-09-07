@@ -80,7 +80,7 @@ let postedEditDog = (values,callback) => {
   }
 
   let getTimeline = (values,callback) => {
-    let query = 'SELECT * from dogs right join (SELECT * FROM match where match.follower_user_id =$1 as seen_dogs) dog.id = seen_dogs.dog_id';
+    let query = 'SELECT * from (SELECT * from dog left join (SELECT * FROM match where match.follower_user_id =$1) as seen_dogs on dog.id = seen_dogs.dog_id) as foo where dog_id is null  AND name is not null';
     dbPoolInstance.query(query,values,(err,result)=>{
         callback(err,result)
 
