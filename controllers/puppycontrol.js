@@ -1,0 +1,446 @@
+
+module.exports = (db) => {
+let populateData;
+
+
+  let getHome  = (request, response) => {
+  // send response with some data (a string)
+    response.render('puppy/index')
+
+};
+
+  let logIn = (request, response) => {
+  // send response with some data (a string)
+    response.render('puppy/login')
+
+};
+
+let postLogIn = (request, response) => {
+    let values = [request.body.username,request.body.password];
+    db.puppy.postLogin(values,(err,result) =>{
+        if(err){
+            console.log('Error at postLogin---', err.message)
+        } else {
+            let userInfo = result.rows[0];
+            let sessionid = userInfo.id;
+            let userName = userInfo.username;
+            let loginCookie = response.cookie("session",sessionid, { maxAge: 900000});
+            let userCookie = response.cookie("userInfo",userName, { maxAge: 900000});
+            response.send("Welcome "+ userName+ '<a href ="/timeline"> Get swiping </a>')
+        }
+    })
+}
+
+let logInOrg = (request, response) => {
+  // send response with some data (a string)
+    response.render('puppy/loginorg')
+
+};
+
+let postLogInOrg =  (request, response) => {
+    let values = [request.body.username,request.body.password];
+    db.puppy.postLoginOrg(values,(err,result) =>{
+        if(err){
+            console.log('Error at postLogin---', err.message)
+        } else {
+            let orgInfo = result.rows[0];
+            let sessionid = orgInfo.id;
+            let url = '/dashboard/org/'+sessionid;
+            let userName = orgInfo.username;
+            let loginCookie = response.cookie("sessionOrg",sessionid, { maxAge: 900000});
+            let orgCookie = response.cookie("orgInfo",userName, { maxAge: 900000});
+            response.send("Welcome "+ userName+ '<a href ='+url+'> Check your dashboard </a>')
+        }
+    })
+}
+  let submitDog = (request,response)=>{
+    let orgCookie = request.cookies['orgInfo'];
+            if(orgCookie=== null  ) {
+            response.render('puppy/loginorg')
+          } else {
+            let loginCookie = request.cookies['sessionOrg'];
+            let obj = {username:orgCookie, orgId:loginCookie}
+
+            response.render('puppy/submitdog',obj)
+
+          }
+        }
+
+let postDog = (request,response) => {
+    let userName = request.cookies['orgInfo'];
+    let org_id = request.cookies["sessionOrg"];
+    console.log(org_id);
+    let {name,description,img,age,gender,hdb_approved} = request.body;
+
+let values = [name,org_id,description,img,age,gender,hdb_approved];
+console.log(values)
+    db.puppy.postedDog(values,(err,result)=>{
+        if(err){
+            console.log('Error at postDog---', err.message)
+        } else{
+
+            response.send("Success "+ userName+ '<a href ="/"> Back to Dashboard?</a>')
+        }
+        })
+
+}
+
+let createAccountUser =(request,response) =>{
+    response.render('puppy/registeruser')
+
+}
+
+let postAccountUser = (request,response) =>{
+    let values = [request.body.username,request.body.password,request.body.bio];
+    db.puppy.postedSignupUser(values,(err,result)=>{
+        if(err){
+            console.log('Error at getRegistered---', err.message)
+        } else{
+            response.send('Success! <a href ="/login/user"> Login Now?</a>')
+        }
+        })
+}
+
+let createAccountOrg =(request,response) =>{
+    response.render('puppy/registerorg')
+
+}
+
+let postAccountOrg = (request,response) =>{
+    let values = [request.body.username,request.body.password];
+    db.puppy.postedSignupOrg(values,(err,result)=>{
+        if(err){
+            console.log('Error at getRegistered---', err.message)
+        } else{
+            response.send('Success! <a href ="/login/org"> Login Now?</a>')
+        }
+        })
+}
+
+
+let getDashboard =(request,response)=> {
+    let values = [request.params.id];
+    db.puppy.getOrgDashboard(values,(err,result)=>{
+        if(err){
+            console.log('Error at getDashboard---', err.message)
+        } else{
+
+            let data = result.rows;
+            let info = {'data': data, 'id':request.params.id };
+
+            response.render('puppy/profile', info)
+        }
+        })
+
+}
+
+
+let indivDog =(request,response)=> {
+    let values = [request.params.id];
+    db.puppy.getIndivDog(values,(err,result)=>{
+        if(err){
+            console.log('Error at getDashboard---', err.message)
+        } else{
+            let data = result.rows;
+            let info = {'data': data };
+            console.log(data)
+
+            response.render('puppy/indivdog',info)
+        }
+        })
+
+}
+
+let editDog =(request,response)=> {
+    let values = [request.params.id];
+    db.puppy.getEditDog(values,(err,result)=>{
+        if(err){
+            console.log('Error at getEdit---', err.message)
+        } else{
+            let data = result.rows;
+            let info = {'data': data };
+
+            response.render('puppy/edit',info)
+        }
+        })
+
+}
+
+let postEditDog =  (request,response) => {
+    let dog_id = request.params.id;
+    let userName = request.cookies['orgInfo'];
+    let org_id = request.cookies["sessionOrg"];
+    let url = "/dashboard/org/"+org_id;
+    console.log(org_id);
+    let {name,description,img,age,gender,hdb_approved} = request.body;
+
+let values = [name,org_id,description,img,age,gender,hdb_approved,dog_id]
+console.log(values)
+    db.puppy.postedEditDog(values,(err,result)=>{
+        if(err){
+            console.log('Error at postEditDog---', err.message)
+        } else{
+
+            response.send("Success you edited your dog"+ userName+ '<a href ='+url+'> Back to Dashboard?</a>')
+        }
+        })
+
+}
+//helper function to check if user has already swiped on the dog before
+
+// function check (arr,arr2) {
+//                 for(i=0;i<arr.length; i++){
+//                     for(j=0;j<arr2.length; j++){
+//                         if(arr[i].id === arr2[i]){
+//                             arr.shift();
+//                     }
+//                 }
+//             }}
+
+// //helper function to populate the card which is async that awaits
+// async function populate (arr,arr2){
+
+//     let populateObj = await check(arr, arr2);
+
+//     if(arr ===[]){
+//         populateObj = {
+//             id:"Oh no! You have ran out of dogs. Try again later?"
+//         }
+//         return populateObj
+//     } else {
+//          populateObj = {
+//             id : arr[0].id,
+//             name: arr[0].name,
+//             description: arr[0].description,
+//             age: arr[0].age,
+//             img: arr[0].img,
+//             hdb_approved:arr[0].hdb_approved
+//         }
+//     arr.shift();
+//      return populateObj;
+// }
+
+//     }
+
+
+let timeline = (request,response) => {
+
+    db.puppy.getTimeline((err,result)=>{
+        if(err){
+            console.log('Error at getTimelineDog---', err.message)
+        } else{
+            console.log(result.rows)
+
+            response.send("hello world")
+        }
+        })
+
+}
+
+// let timeline = (request,response) => {
+// let matchedIdArray =[];
+// let user_id = request.cookies["session"];
+// let values =[user_id];
+//     db.puppy.getCheckMatches(values,(err,result)=>{
+//         if(err){
+//             console.log('Error at CheckMatchesDog---', err.message)
+//         } else{
+//             console.log(result.rows);
+//             let matchArr = result.rows;
+//             for(i=0; i<matchArr.length; i++){
+//                 if(matchArr[i].follower_user_id === user_id){
+//                     matchedIdArray.push(matchArr[i].dog_id);
+//                     return matchedIdArray
+//                 }
+
+//             }
+//             db.puppy.getTimeline((err,result)=>{
+//         if(err){
+//             console.log('Error at getTimelineDog---', err.message)
+//         } else{
+
+//             populateData = result.rows;
+//             console.log(matchedIdArray)
+//             let obj =  populate(populateData,matchedIdArray);
+//             console.log(obj) //PROBLEM1!1 RETURNS EMPTY ARR. WHY?
+//             // console.log(populateData, "this is data AFTER function");
+//             let dogCookie = response.cookie("dog",obj.id);
+//             response.render('puppy/timeline',obj)
+//         }
+//         })
+//         }
+//         })
+// }
+
+let swipe =  (request,response) => {
+    let user_id = request.cookies["session"];
+    let dog_id = request.cookies["dog"];
+    let values = [dog_id,user_id];
+    let arr = [];
+
+    if(request.body.swipe === 'like'){
+        db.puppy.postSwipeLike(values,(err,result)=>{
+            if(err){
+                console.log(err, "err at swipe")
+            } else{
+            let obj = populate(populateData,arr);
+            let dogCookie = response.cookie("dog",obj.id);
+            if(populateData.length <1){
+                response.send("out of dogs")
+            }else{
+            console.log(populateData, "this is data AFTER function");
+            response.render('puppy/timeline',obj)
+            }}
+        })}
+    else if(request.body.swipe === 'dislike'){
+        db.puppy.postSwipeDislike(values,(err,result)=>{
+            if(err){
+                console.log(err, "err at swipe")
+            } else{
+            check (populateData,matchedIdArray);
+            let obj = populate(populateData);
+            let dogCookie = response.cookie("dog",obj.id);
+            if(populateData.length <1){
+            response.send("out of dogs")
+            } else {
+                 console.log(populateData, "this is data AFTER function");
+            response.render('puppy/timeline',obj)
+            }
+
+            }
+        })
+    }
+}
+
+let getOrgMatches =(request,response)=> {
+    let values = [request.params.id];
+    db.puppy.getOrgMatched(values,(err,result)=>{
+        if(err){
+            console.log('Error at getMatches---', err.message)
+        } else{
+            console.log(result.rows)
+            let data = result.rows;
+            let obj = { 'data':data }
+            response.render('puppy/matches',obj)
+        }
+        })
+
+}
+
+let getMessages =(request,response)=> {
+    let values = [request.params.yourid, request.params.otherid];
+    db.puppy.getMessaged(values,(err,result)=>{
+        if(err){
+            console.log('Error at getMessages---', err.message)
+        } else{
+            console.log(result.rows);
+            let data = result.rows;
+            let obj = { 'data':data }
+            response.render('puppy/chats',obj)
+        }
+        })
+}
+
+let postMessages =(request,response)=> {
+
+    let values = [request.params.senderid, request.params.recipientid, request.body.sender_name,request.body.recipient_name,request.body.content ];
+    db.puppy.postMessaged(values,(err,result)=>{
+        if(err){
+            console.log('Error at postMessages---', err.message)
+        } else{
+            console.log(result.rows, "this is from postMessages");
+            let data = result.rows;
+            let obj = { 'data':data }
+            response.send('Message successfully sent! <a href="/messages/'+request.params.senderid+ '/'+ request.params.recipientid+'>Send another?</a>')
+        }
+        })
+}
+
+let getMessagesUser =(request,response)=> {
+    let user_id = request.cookies['session']
+    let values = [user_id, request.params.id];
+    db.puppy.getMessagedUser(values,(err,result)=>{
+        if(err){
+            console.log('Error at getMessages---', err.message)
+        } else{
+            console.log(result.rows);
+            let data = result.rows
+            let obj = {data:data, yourid:user_id, otherid:request.params.id}
+            console.log(obj)
+            response.render("puppy/userchat",obj)
+
+        }
+        })
+}
+
+let postMessagesUser =(request,response)=> {
+    let user_id = request.cookies['session']
+
+    let values = [user_id, request.params.id, request.body.sender_name,request.body.recipient_name,request.body.content ];
+    db.puppy.postMessagedUser(values,(err,result)=>{
+        if(err){
+            console.log('Error at postMessages---', err.message)
+        } else{
+            console.log(result.rows, "this is from postMessages");
+            let data = result.rows;
+            let obj = { 'data':data }
+            let url = '/chat/'+request.params.id
+            response.send(`Message successfully sent!`)
+        }
+        })
+}
+
+
+
+// let postFollowers = (request,response) =>{
+//     let follower_id = request.cookies['session'];
+
+//     let values = [request.params.id,follower_id];
+//     db.tweedr.postedFollowers(values,(err,result)=>{
+//         if(err){
+//             console.log('Error at postFollowers---', err.message)
+//         } else{
+//             response.send('Successfully followed! <a href ="/"> Back to home?</a>')
+//         }
+//         })
+// }
+
+
+
+
+
+  /**
+   * ===========================================
+   * Export controller functions as a module
+   * ===========================================
+   */
+  return {
+    getHome,
+    logIn,
+    postLogIn,
+    logInOrg,
+    postLogInOrg,
+    submitDog,
+    postDog,
+    createAccountUser,
+    postAccountUser,
+    createAccountOrg,
+    postAccountOrg,
+    getDashboard,
+    indivDog,
+    editDog,
+    postEditDog,
+    timeline,
+    swipe,
+    getOrgMatches,
+    getMessages,
+    postMessages,
+    getMessagesUser,
+    postMessagesUser,
+
+
+
+    // postFollowers
+
+  };
+}
