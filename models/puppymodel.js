@@ -94,12 +94,17 @@ let getCheckMatches = (values,callback) => {
     })
   }
 
-  let postSwipeLike = (values,callback) => {
+  let postSwipeLike =(values,value,callback) => {
     let query = 'INSERT INTO match (dog_id,follower_user_id,liked) VALUES ($1,$2,true);';
-    dbPoolInstance.query(query,values,(err,result)=>{
+    dbPoolInstance.query(query,values)
+        .then(() => {
+            let query = 'INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES ($2,$1,$3,$4,$5);';
+    dbPoolInstance.query(query,value,(err,result)=>{
         callback(err,result)
     })
+        })
   }
+
 
   let postSwipeDislike = (values,callback) => {
     let query = 'INSERT INTO match (dog_id,follower_user_id,liked) VALUES ($1,$2,false);';
@@ -123,7 +128,7 @@ let getCheckMatches = (values,callback) => {
   }
 
   let postMessaged =(values,callback) =>{
-    let query ="INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES($1,$2,$3,$4,$5) RETURNING * where sender_id =$1 and recipient_id = $2";
+    let query ="INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES($1,$2,$3,$4,$5) RETURNING *";
     dbPoolInstance.query(query,values,(err,result)=>{
         callback(err,result)
     })
@@ -137,13 +142,18 @@ let getCheckMatches = (values,callback) => {
   }
 
   let postMessagedUser =(values,callback) =>{
-    let query ="INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES($1,$2,$3,$4,$5) returning * where recipient_id =$1 and sender_id=$2 or recipient_id =$2 and sender_id=$1 ";
+    let query ="INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES($1,$2,$3,$4,$5) returning * ";
     dbPoolInstance.query(query,values,(err,result)=>{
         callback(err,result)
     })
   }
 
-
+let getAllConversationsUsers =(values,callback) =>{
+    let query ="select * from match inner join dog on match.dog_id = dog.id where match.follower_user_id=$1";
+    dbPoolInstance.query(query,values,(err,result)=>{
+        callback(err,result)
+    })
+  }
 
 
   return {
@@ -165,7 +175,9 @@ let getCheckMatches = (values,callback) => {
     postMessaged,
     getMessagedUser,
     postMessagedUser,
-    getCheckMatches
+    getCheckMatches,
+    getAllConversationsUsers,
+
 
 
 

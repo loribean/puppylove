@@ -26,7 +26,7 @@ let postLogIn = (request, response) => {
             let userName = userInfo.username;
             let loginCookie = response.cookie("session",sessionid, { maxAge: 900000});
             let userCookie = response.cookie("userInfo",userName, { maxAge: 900000});
-            response.send("Welcome "+ userName+ '<a href ="/timeline"> Get swiping </a>')
+            response.send("Welcome "+ userName+ '<a href ="/home"> Go to dashboard </a>')
         }
     })
 }
@@ -225,6 +225,7 @@ let timeline = (request,response) => {
             let obj = populate(populateData);
             let dogId = obj.id;
             let dogCookie = response.cookie("dogCookie",dogId);
+            let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
         }
         })
@@ -235,23 +236,31 @@ let timeline = (request,response) => {
 let swipe =  (request,response) => {
     let user_id = request.cookies["session"];
     let dog_id = request.cookies["dogCookie"];
+    let dogBot = request.cookies["dogName"];
+    let dogBot2 = request.cookies["userInfo"];
+    let defaultMsg ='THIS IS THE START OF YOUR CONVERSATION';
     let values = [dog_id,user_id];
+    let value = [dog_id,user_id,dogBot,dogBot2,defaultMsg]
 
     if(request.body.swipe === 'like'){
-        db.puppy.postSwipeLike(values,(err,result)=>{
+        db.puppy.postSwipeLike(values,value,(err,result)=>{
             if(err){
                 console.log(err, "err at swipe")
             } else{
             let obj = populate(populateData);
-            let dogCookie = response.cookie("dogCookie",obj.id)
+            let dogCookie = response.cookie("dogCookie",obj.id);
+            let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
                 response.send("out of dogs")
             }else{
             console.log(populateData, "this is data AFTER function");
-            let dogCookie = response.cookie("dogCookie",obj.id)
+
             response.render('puppy/timeline',obj)
-            }}
-        })}
+            }
+        }
+    })
+    }
+
     else if(request.body.swipe === 'dislike'){
         db.puppy.postSwipeDislike(values,(err,result)=>{
             if(err){
@@ -259,7 +268,8 @@ let swipe =  (request,response) => {
             } else{
 
             let obj = populate(populateData);
-            let dogCookie = response.cookie("dogCookie",obj.id)
+            let dogCookie = response.cookie("dogCookie",obj.id);
+            let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
             response.send("out of dogs")
             } else {
@@ -290,9 +300,11 @@ let getOrgMatches =(request,response)=> {
 
 let getMessages =(request,response)=> {
     let values = [request.params.yourid, request.params.otherid];
+
     db.puppy.getMessaged(values,(err,result)=>{
         if(err){
             console.log('Error at getMessages---', err.message)
+            response.send("Something went wrong while getting from DB")
         } else{
             console.log(result.rows);
             let data = result.rows;
@@ -304,6 +316,7 @@ let getMessages =(request,response)=> {
 
 let postMessages =(request,response)=> {
 
+
     let values = [request.params.senderid, request.params.recipientid, request.body.sender_name,request.body.recipient_name,request.body.content ];
     db.puppy.postMessaged(values,(err,result)=>{
         if(err){
@@ -312,7 +325,7 @@ let postMessages =(request,response)=> {
             console.log(result.rows, "this is from postMessages");
             let data = result.rows;
             let obj = { 'data':data }
-            response.send('Message successfully sent! <a href="/messages/'+request.params.senderid+ '/'+ request.params.recipientid+'>Send another?</a>')
+            response.redirect(`/messages/${request.params.senderid}/${request.params.recipientid}`)
         }
         })
 }
@@ -346,26 +359,26 @@ let postMessagesUser =(request,response)=> {
             let data = result.rows;
             let obj = { 'data':data }
             let url = '/chat/'+request.params.id
-            response.send(`Message successfully sent!`)
+            response.redirect(`/chat/${request.params.id}`);
         }
         })
 }
 
+let getAllConversationsUser =(request,response)=> {
+    let user_id = request.cookies['session']
+    let values = [user_id];
+    db.puppy.getAllConversationsUsers(values,(err,result)=>{
+        if(err){
+            console.log('Error at postMessages---', err.message)
+        } else{
+            console.log(result.rows, "this is from getAllMessages");
+            let data = result.rows;
+            let obj = { 'data':data }
+            response.render("puppy/dashboarduser",obj)
 
-
-// let postFollowers = (request,response) =>{
-//     let follower_id = request.cookies['session'];
-
-//     let values = [request.params.id,follower_id];
-//     db.tweedr.postedFollowers(values,(err,result)=>{
-//         if(err){
-//             console.log('Error at postFollowers---', err.message)
-//         } else{
-//             response.send('Successfully followed! <a href ="/"> Back to home?</a>')
-//         }
-//         })
-// }
-
+        }
+        })
+}
 
 
 
@@ -398,6 +411,7 @@ let postMessagesUser =(request,response)=> {
     postMessages,
     getMessagesUser,
     postMessagesUser,
+    getAllConversationsUser
 
 
 

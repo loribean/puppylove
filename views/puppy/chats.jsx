@@ -3,10 +3,10 @@ const React = require('react');
 export default class Chats extends React.Component {
     render(){
         let messageArr = this.props.data;
+        console.log(messageArr,"----Message array")
         let recipient = messageArr[0].recipient_name;
         let sender = messageArr[0].sender_name;
         let url = `/messages/${this.props.data[0].sender_id}/${this.props.data[0].recipient_id}`
-
 
         let msgList = messageArr.map(item =>{
             return <li>{item.sender_name}: {item.content}</li>

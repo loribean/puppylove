@@ -1,13 +1,12 @@
 const React = require('react');
 
-export default class Matches extends React.Component {
+export default class Dashboarduser extends React.Component {
     render(){
         let matchArr = this.props.data;
 
         let matchList = matchArr.map(item =>{
-            return <li>{item.username} matched {item.name} <a href={`/messages/${item.dog_id}/${item.follower_user_id}`}>Click here to start a conversation</a></li>
+            return <li>{item.name} <a href={`/chat/${item.dog_id}`}>Your Chats</a></li>
         })
-
 
         return (
         <html>
@@ -16,9 +15,13 @@ export default class Matches extends React.Component {
         </head>
         <body>
           <div>
-            <h1>Welcome to your matches!</h1>
-
+            <h1>Welcome to your User dashboard</h1>
+            <p>Your Messages</p>
             <ul>{matchList}</ul>
+
+            <a href ="/timeline"> Click here to get swiping </a>
+
+
           </div>
 
         </body>
