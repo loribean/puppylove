@@ -190,12 +190,6 @@ console.log(values)
 
 //helper function to populate the card which is async that awaits
 function populate (arr){
-    if(arr ===[]){
-        populateObj = {
-            id:"Oh no! You have ran out of dogs. Try again later?"
-        }
-        return populateObj
-    } else {
          populateObj = {
             id : arr[0].id,
             org_id : arr[0].org_id,
@@ -209,7 +203,7 @@ function populate (arr){
     arr.shift();
      return populateObj;
 }
-    }
+
 
 
 let timeline = (request,response) => {
@@ -218,16 +212,20 @@ let timeline = (request,response) => {
 
     db.puppy.getTimeline(values,(err,result)=>{
         if(err){
-            console.log('Error at getTimelineDog---', err.message)
+            res.send("you have run out of dogs to swipe. try again later?")
         } else{
             console.log(result.rows)
             populateData = result.rows;
+            if(populateData.length <1){
+                response.send("you have run out of dogs to swipe. try again later?")
+            } else {
+
             let obj = populate(populateData);
             let dogId = obj.id;
             let dogCookie = response.cookie("dogCookie",dogId);
             let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
-        }
+        }}
         })
 
 }

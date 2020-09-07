@@ -5,7 +5,7 @@ export default class Matches extends React.Component {
         let matchArr = this.props.data;
 
         let matchList = matchArr.map(item =>{
-            return <li>{item.username} matched {item.name} <a href={`/messages/${item.dog_id}/${item.follower_user_id}`}>Click here to start a conversation</a></li>
+            return <li>{item.username} matched {item.name} <a href={`/messages/${item.follower_user_id}/${item.dog_id}`}>Click here to start a conversation</a></li>
         })
 
 
