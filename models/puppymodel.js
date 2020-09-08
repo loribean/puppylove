@@ -101,7 +101,7 @@ let getCheckMatches = (values,callback) => {
             let query = 'INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES ($2,$1,$3,$4,$5);';
     dbPoolInstance.query(query,value,(err,result)=>{
         callback(err,result)
-    })
+    }).catch(console.log("error occurred"))
         })
   }
 
