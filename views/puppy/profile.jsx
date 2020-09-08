@@ -16,7 +16,7 @@ export default class Profile extends React.Component {
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
-            <img class="img-fluid rounded-circle" src="https://source.unsplash.com/5-jX_6kqsaw/400x400" alt="" />
+            <img class="img-fluid rounded-circle" src={dog.img} alt="" />
           </div>
         </div>
         <div class="col-lg-6 order-lg-1">

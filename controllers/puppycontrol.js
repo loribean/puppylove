@@ -94,9 +94,10 @@ let postAccountUser = (request,response) =>{
     let values = [request.body.username,request.body.password,request.body.bio];
     db.puppy.postedSignupUser(values,(err,result)=>{
         if(err){
-            console.log('Error at getRegistered---', err.message)
+            response.send("oh no! something went wrong");
         } else{
-            response.send('Success! <a href ="/login/user"> Login Now?</a>')
+            response.redirect("/login/user")
+
         }
         })
 }
@@ -110,7 +111,7 @@ let postAccountOrg = (request,response) =>{
     let values = [request.body.username,request.body.password];
     db.puppy.postedSignupOrg(values,(err,result)=>{
         if(err){
-            console.log('Error at getRegistered---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             response.send('Success! <a href ="/login/org"> Login Now?</a>')
         }
@@ -122,7 +123,7 @@ let getDashboard =(request,response)=> {
     let values = [request.params.id];
     db.puppy.getOrgDashboard(values,(err,result)=>{
         if(err){
-            console.log('Error at getDashboard---', err.message)
+            response.send("oh no! something went wrong");
         } else{
 
             let data = result.rows;
@@ -139,7 +140,7 @@ let indivDog =(request,response)=> {
     let values = [request.params.id];
     db.puppy.getIndivDog(values,(err,result)=>{
         if(err){
-            console.log('Error at getDashboard---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             let data = result.rows;
             let info = {'data': data };
@@ -155,7 +156,7 @@ let editDog =(request,response)=> {
     let values = [request.params.id];
     db.puppy.getEditDog(values,(err,result)=>{
         if(err){
-            console.log('Error at getEdit---', err.message)
+           response.send("oh no! something went wrong");
         } else{
             let data = result.rows;
             let info = {'data': data };
@@ -212,7 +213,7 @@ let timeline = (request,response) => {
 
     db.puppy.getTimeline(values,(err,result)=>{
         if(err){
-            res.send("you have run out of dogs to swipe. try again later?")
+            response.send("you have run out of dogs to swipe. try again later?")
         } else{
             console.log(result.rows)
             populateData = result.rows;
@@ -243,7 +244,7 @@ let swipe =  (request,response) => {
     if(request.body.swipe === 'like'){
         db.puppy.postSwipeLike(values,value,(err,result)=>{
             if(err){
-                console.log(err, "err at swipe")
+                response.send("oh no! something went wrong");
             } else{
             let obj = populate(populateData);
             let dogCookie = response.cookie("dogCookie",obj.id);
@@ -262,7 +263,7 @@ let swipe =  (request,response) => {
     else if(request.body.swipe === 'dislike'){
         db.puppy.postSwipeDislike(values,(err,result)=>{
             if(err){
-                console.log(err, "err at swipe")
+               response.send("oh no! something went wrong");
             } else{
 
             let obj = populate(populateData);
@@ -285,7 +286,7 @@ let getOrgMatches =(request,response)=> {
     let values = [request.params.id];
     db.puppy.getOrgMatched(values,(err,result)=>{
         if(err){
-            console.log('Error at getMatches---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             console.log(result.rows)
             let data = result.rows;
@@ -301,7 +302,7 @@ let getMessages =(request,response)=> {
 
     db.puppy.getMessaged(values,(err,result)=>{
         if(err){
-            console.log('Error at getMessages---', err.message)
+
             response.send("Something went wrong while getting from DB")
         } else{
             console.log(result.rows);
@@ -318,7 +319,7 @@ let postMessages =(request,response)=> {
     let values = [request.params.senderid, request.params.recipientid, request.body.sender_name,request.body.recipient_name,request.body.content ];
     db.puppy.postMessaged(values,(err,result)=>{
         if(err){
-            console.log('Error at postMessages---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             console.log(result.rows, "this is from postMessages");
             let data = result.rows;
@@ -333,7 +334,7 @@ let getMessagesUser =(request,response)=> {
     let values = [user_id, request.params.id];
     db.puppy.getMessagedUser(values,(err,result)=>{
         if(err){
-            console.log('Error at getMessages---', err.message)
+           response.send("oh no! something went wrong");
         } else{
             console.log(result.rows);
             let data = result.rows
@@ -351,7 +352,7 @@ let postMessagesUser =(request,response)=> {
     let values = [user_id, request.params.id, request.body.sender_name,request.body.recipient_name,request.body.content ];
     db.puppy.postMessagedUser(values,(err,result)=>{
         if(err){
-            console.log('Error at postMessages---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             console.log(result.rows, "this is from postMessages");
             let data = result.rows;
@@ -367,7 +368,7 @@ let getAllConversationsUser =(request,response)=> {
     let values = [user_id];
     db.puppy.getAllConversationsUsers(values,(err,result)=>{
         if(err){
-            console.log('Error at postMessages---', err.message)
+            response.send("oh no! something went wrong");
         } else{
             console.log(result.rows, "this is from getAllMessages");
             let data = result.rows;
