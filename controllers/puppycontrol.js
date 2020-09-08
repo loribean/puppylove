@@ -222,9 +222,9 @@ let timeline = (request,response) => {
             } else {
 
             let obj = populate(populateData);
-            let dogId = obj.id;
+
             console.log(obj)
-            let dogCookie = response.cookie("dogCookie",dogId,{ maxAge: 900000});
+            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
             console.log(obj)
@@ -252,7 +252,7 @@ let swipe =  (request,response) => {
             } else{
             let obj = populate(populateData);
             let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",dogId,{ maxAge: 900000});
+            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
                 response.send("out of dogs")
@@ -273,7 +273,7 @@ let swipe =  (request,response) => {
 
             let obj = populate(populateData);
             let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",dogId,{ maxAge: 900000});
+            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
             response.send("out of dogs to swipe. try again later")
