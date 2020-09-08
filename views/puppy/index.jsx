@@ -48,7 +48,7 @@ class Index extends React.Component {
       <div className="container">
         <h1 className="masthead-heading mb-0">Find your Furever</h1>
         <h2 className="masthead-subheading mb-0"></h2>
-        <a href="#" className="btn btn-primary btn-xl rounded-pill mt-5">Let's Go!</a>
+        <a href="/home" className="btn btn-primary btn-xl rounded-pill mt-5">Let's Go!</a>
       </div>
     </div>
     <div className="bg-circle-1 bg-circle"></div>

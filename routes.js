@@ -28,8 +28,8 @@ module.exports = (app, allModels) => {
   app.post('/messages/:senderid/:recipientid',puppyControllerCallbacks.postMessages);
    app.get('/chat/:id',puppyControllerCallbacks.getMessagesUser);
    app.post('/chathist/:id',puppyControllerCallbacks.postMessagesUser);
-   app.get('/home',puppyControllerCallbacks.getAllConversationsUser)
-   // app.get('/check',puppyControllerCallbacks.checkMatches);
+   app.get('/home',puppyControllerCallbacks.getAllConversationsUser);
+   app.get('/logout',puppyControllerCallbacks.logout);
 
 
 };

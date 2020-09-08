@@ -54,6 +54,9 @@ export default class Matches extends React.Component {
           <li className="nav-item">
             <a className="nav-link" href="/submitdog">Enter a new dog!</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/logout">Logout</a>
+          </li>
         </ul>
       </div>
     </div>

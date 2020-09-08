@@ -7,7 +7,7 @@ module.exports = (dbPoolInstance) => {
 
 
 let postLogin = (values,callback) => {
-    let query = 'SELECT * FROM users WHERE username=$1 and password=$2';
+    let query = 'SELECT * FROM users WHERE username=$1';
     dbPoolInstance.query(query,values,(err,result)=>{
         callback(err,result)
 
@@ -15,7 +15,7 @@ let postLogin = (values,callback) => {
   }
 
   let postLoginOrg = (values,callback) => {
-    let query = 'SELECT * FROM org WHERE username=$1 and password=$2';
+    let query = 'SELECT * FROM org WHERE username=$1';
     dbPoolInstance.query(query,values,(err,result)=>{
         callback(err,result)
 

@@ -50,6 +50,9 @@ export default class Dashboarduser extends React.Component {
           <li className="nav-item">
             <a className="nav-link" href="/">Home</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/logout">Logout</a>
+          </li>
         </ul>
       </div>
     </div>

@@ -1,6 +1,13 @@
+const SALT = "bananas are delicious";
+const sha256 =require('js-sha256');
+
+
+
 
 module.exports = (db) => {
 let populateData;
+
+
 
 
   let getHome  = (request, response) => {
@@ -10,46 +17,77 @@ let populateData;
 };
 
   let logIn = (request, response) => {
-  // send response with some data (a string)
+    let authUser = request.cookies['authUser'];
+    if(!authUser){
     response.render('puppy/login')
-
+} else {
+    response.redirect('/home')
+}
 };
 
 let postLogIn = (request, response) => {
-    let values = [request.body.username,request.body.password];
+    let values = [request.body.username];
+    let password = request.body.password;
+    let hash = sha256(password)
     db.puppy.postLogin(values,(err,result) =>{
         if(err){
-            console.log('Error at postLogin---', err.message)
+            response.send("This username does not exist!")
+            console.log(err.message)
         } else {
             let userInfo = result.rows[0];
+            let dbPassword = sha256(result.rows[0].password);
+            if(dbPassword === hash){
+                let auth = sha256(userInfo.id+SALT);
+                let authCookie = response.cookie("authUser",auth, { maxAge: 900000});
+
             let sessionid = userInfo.id;
             let userName = userInfo.username;
             let loginCookie = response.cookie("session",sessionid, { maxAge: 900000});
             let userCookie = response.cookie("userInfo",userName, { maxAge: 900000});
             response.redirect("/home")
+
+            } else {
+                response.send('Oh no your login attempt failed. <a href="/"> try again?</a>')
+            }
+
         }
     })
 }
 
 let logInOrg = (request, response) => {
-  // send response with some data (a string)
+let authOrg = request.cookies['authOrg'];
+let id = request.cookies['sessionOrg'];
+    if(!authUser){
     response.render('puppy/loginorg')
-
+} else {
+    response.redirect(`/dashboard/${id}`)
+}
 };
 
 let postLogInOrg =  (request, response) => {
-    let values = [request.body.username,request.body.password];
+
+    let values = [request.body.username];
+    let password = request.body.password;
+    let hash = sha256(password);
     db.puppy.postLoginOrg(values,(err,result) =>{
         if(err){
-            response.send('Wrong Password?');
+            response.send('This username does not exist!');
         } else {
             let orgInfo = result.rows[0];
+            let dbPassword = sha256(res.rows[0].password);
+            if(dbPassword === hash){
             let sessionid = orgInfo.id;
+            let authOrg = sha256(sessionid+ SALT)
+            let authOrgCookie = response.cookie("authOrg",authOrg, { maxAge: 900000});
             let url = '/dashboard/org/'+sessionid;
             let userName = orgInfo.username;
             let loginCookie = response.cookie("sessionOrg",sessionid, { maxAge: 900000});
             let orgCookie = response.cookie("orgInfo",userName, { maxAge: 900000});
             response.redirect(`${url}`);
+            } else{
+                response.send('Oh no your login attempt failed. <a href="/"> try again?</a>')
+            }
+
         }
     })
 }
@@ -386,6 +424,12 @@ let getAllConversationsUser =(request,response)=> {
         })
 }
 
+let logout  = (request,response)=> {
+    response.clearCookie('authOrg');
+    response.clearCookie('authUser');
+    response.redirect('/');
+}
+
 
 
 
@@ -417,7 +461,8 @@ let getAllConversationsUser =(request,response)=> {
     postMessages,
     getMessagesUser,
     postMessagesUser,
-    getAllConversationsUser
+    getAllConversationsUser,
+    logout
 
 
 
