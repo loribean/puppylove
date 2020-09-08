@@ -1,17 +1,17 @@
 
 
 
--- INSERT INTO users (username, password, bio) VALUES ('timotits','12345','Hey! I am Tim!');
+INSERT INTO users (username, password, bio) VALUES ('timotits','12345','Hey! I am Tim!');
 
--- INSERT INTO users (username, password, bio) VALUES ('jewelyap','12345','First-time pawrent');
--- INSERT INTO users (username, password, bio) VALUES ('polkalette','12345','looking to adopt a puppy');
--- INSERT INTO users (username, password, bio) VALUES ('shurui','12345','looking for a buddy for my dog');
+INSERT INTO users (username, password, bio) VALUES ('jewelyap','12345','First-time pawrent');
+INSERT INTO users (username, password, bio) VALUES ('polkalette','12345','looking to adopt a puppy');
+INSERT INTO users (username, password, bio) VALUES ('shurui','12345','looking for a buddy for my dog');
 
--- INSERT INTO org (username, password) VALUES ('SOSD','12345');
--- INSERT INTO org (username, password) VALUES ('SPCA','12345');
--- INSERT INTO org (username, password) VALUES ('A-strays-life','12345');
--- INSERT INTO org (username, password) VALUES ('MercyLight-Adoptions','12345');
--- INSERT INTO org (username, password) VALUES ('OSCAS','12345');
+INSERT INTO org (username, password) VALUES ('SOSD','12345');
+INSERT INTO org (username, password) VALUES ('SPCA','12345');
+INSERT INTO org (username, password) VALUES ('A-strays-life','12345');
+INSERT INTO org (username, password) VALUES ('MercyLight-Adoptions','12345');
+INSERT INTO org (username, password) VALUES ('OSCAS','12345');
 
 
 
@@ -32,10 +32,3 @@ INSERT INTO dog (name,org_id,description,img,age,gender,hdb_approved) VALUES ('Z
 INSERT INTO dog (name,org_id,description,img,age,gender,hdb_approved) VALUES ('Dylan',3,'Dylan was rescued with a massive maggot wound at the back of his neck. He was terrified when he first came to us, but despite being in such pain, he allowed us to tend to his wound for more than an hour each time. It’s been a couple of years now, and Dylan has learnt to walk on leash. He’s still takes time to warm up to people, we hope to find him a family who would be patient with him, and give him a home where he can live comfortably for the rest of his life.','https://source.unsplash.com/UtrE5DcgEyg/400x400','3 years','male',false);
 
 INSERT INTO dog (name,org_id,description,img,age,gender,hdb_approved) VALUES ('Tofu',2,'Tofu has come a long way. When we brought Bindi in to treat her leg, she was aggressive like anything, growling at anyone who approaches, threatening to attack in fear. How things has changed. Bindi now enjoys going for walks, and enjoys the affection and company of the humans she has come to know. However, she is not good with toddlers, and would do well in a small family with no young children.','https://source.unsplash.com/6RuArbLtvLU/400x400','3 month','male',false);
-
--- INSERT INTO match (dog_id,follower_user_id,liked) VALUES (1,2,false);
--- INSERT INTO match (dog_id,follower_user_id,liked) VALUES (2,4,true);
--- INSERT INTO match (dog_id,follower_user_id,liked) VALUES (3,1,true);
-
-
--- INSERT INTO message (sender_id,recipient_id,sender_name,recipient_name,content) VALUES (4,4,'Mark','shurui','Hey there! Nice to meet you shurui, I am from SOSD and you are interested in Mark?');
