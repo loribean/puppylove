@@ -1,7 +1,7 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
-const sslRedirect = require('heroku-ssl-redirect');
+
 
 /**
  * ===================================
@@ -25,7 +25,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-app.use(sslRedirect());
+
 
 // Set react-views to be the default view engine
 const reactEngine = require('express-react-views').createEngine();
