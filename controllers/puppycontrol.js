@@ -57,10 +57,10 @@ let postLogIn = (request, response) => {
 let logInOrg = (request, response) => {
 let authOrg = request.cookies['authOrg'];
 let id = request.cookies['sessionOrg'];
-    if(!authUser){
+    if(!authOrg){
     response.render('puppy/loginorg')
 } else {
-    response.redirect(`/dashboard/${id}`)
+    response.redirect(`/dashboard/org/${id}`)
 }
 };
 
@@ -74,7 +74,7 @@ let postLogInOrg =  (request, response) => {
             response.send('This username does not exist!');
         } else {
             let orgInfo = result.rows[0];
-            let dbPassword = sha256(res.rows[0].password);
+            let dbPassword = sha256(result.rows[0].password);
             if(dbPassword === hash){
             let sessionid = orgInfo.id;
             let authOrg = sha256(sessionid+ SALT)
@@ -158,14 +158,16 @@ let postAccountOrg = (request,response) =>{
 
 
 let getDashboard =(request,response)=> {
-    let values = [request.params.id];
+    let orgId = request.cookies["sessionOrg"];
+    let values = [orgId];
+    let username = request.cookies["orgInfo"];
     db.puppy.getOrgDashboard(values,(err,result)=>{
         if(err){
             response.send("oh no! something went wrong");
         } else{
 
             let data = result.rows;
-            let info = {'data': data, 'id':request.params.id };
+            let info = {'data': data, 'id':request.params.id, 'username':username};
 
             response.render('puppy/profile', info)
         }
@@ -409,7 +411,12 @@ let postMessagesUser =(request,response)=> {
 }
 
 let getAllConversationsUser =(request,response)=> {
-    let user_id = request.cookies['session']
+    let authUser =request.cookies['authUser'];
+    if(!authUser){
+        response.render('puppy/login')
+    } else {
+    let user_id = request.cookies['session'];
+    let username = request.cookies['userInfo'];
     let values = [user_id];
     db.puppy.getAllConversationsUsers(values,(err,result)=>{
         if(err){
@@ -417,11 +424,11 @@ let getAllConversationsUser =(request,response)=> {
         } else{
             console.log(result.rows, "this is from getAllMessages");
             let data = result.rows;
-            let obj = { 'data':data }
+            let obj = { 'data':data, 'username': username}
             response.render("puppy/dashboarduser",obj)
 
         }
-        })
+        })}
 }
 
 let logout  = (request,response)=> {

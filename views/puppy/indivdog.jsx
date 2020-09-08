@@ -2,7 +2,7 @@ const React = require('react');
 
 export default class Indivdog extends React.Component {
     render(){
-const {name, description,age,gender,hdb_approved,id} = this.props.data[0];
+const {name, description,age,gender,hdb_approved,id,img} = this.props.data[0];
 let url = "/dogs/edit/"+id
 
 
@@ -54,14 +54,14 @@ let url = "/dogs/edit/"+id
       <div class="row align-items-center">
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
-            <img class="img-fluid rounded-circle" src="https://source.unsplash.com/Qb7D1xw28Co/400x400" alt=""/>
+            <img class="img-fluid rounded-circle" src={img} alt=""/>
           </div>
         </div>
         <div class="col-lg-6 order-lg-1">
           <div class="p-5">
             <h2 class="display-4">{age} {gender}</h2>
             <p>{description}</p>
-            <p>hdb_approved: {hdb_approved}</p>
+            <p>hdb_approved: {JSON.stringify(hdb_approved)}</p>
             <a href={url} className="btn btn-primary btn-xl rounded-pill mt-5">Edit this profile</a>
 
           </div>

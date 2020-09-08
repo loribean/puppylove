@@ -1,17 +1,17 @@
 
 
 
-INSERT INTO users (username, password, bio) VALUES ('timotits','12345','Hey! I am Tim!');
+-- INSERT INTO users (username, password, bio) VALUES ('timotits','12345','Hey! I am Tim!');
 
-INSERT INTO users (username, password, bio) VALUES ('jewelyap','12345','First-time pawrent');
-INSERT INTO users (username, password, bio) VALUES ('polkalette','12345','looking to adopt a puppy');
-INSERT INTO users (username, password, bio) VALUES ('shurui','12345','looking for a buddy for my dog');
+-- INSERT INTO users (username, password, bio) VALUES ('jewelyap','12345','First-time pawrent');
+-- INSERT INTO users (username, password, bio) VALUES ('polkalette','12345','looking to adopt a puppy');
+-- INSERT INTO users (username, password, bio) VALUES ('shurui','12345','looking for a buddy for my dog');
 
-INSERT INTO org (username, password) VALUES ('SOSD','12345');
-INSERT INTO org (username, password) VALUES ('SPCA','12345');
-INSERT INTO org (username, password) VALUES ('A-strays-life','12345');
-INSERT INTO org (username, password) VALUES ('MercyLight-Adoptions','12345');
-INSERT INTO org (username, password) VALUES ('OSCAS','12345');
+-- INSERT INTO org (username, password) VALUES ('SOSD','12345');
+-- INSERT INTO org (username, password) VALUES ('SPCA','12345');
+-- INSERT INTO org (username, password) VALUES ('A-strays-life','12345');
+-- INSERT INTO org (username, password) VALUES ('MercyLight-Adoptions','12345');
+-- INSERT INTO org (username, password) VALUES ('OSCAS','12345');
 
 
 

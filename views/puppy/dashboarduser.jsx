@@ -3,6 +3,7 @@ const React = require('react');
 export default class Dashboarduser extends React.Component {
     render(){
         let msgArr = this.props.data;
+        let username = this.props.username;
 
         let msgList = msgArr.map(item =>{
             return <li>
@@ -62,7 +63,7 @@ export default class Dashboarduser extends React.Component {
     <div className="masthead-content">
       <div className="container">
         <h1 className="masthead-heading mb-0">Welcome to your dashboard</h1>
-        <h2 className="masthead-subheading mb-0"></h2>
+        <h2 className="masthead-subheading mb-0">{username}</h2>
         <a href="/timeline" className="btn btn-primary btn-xl rounded-pill mt-5">Get Swiping!</a>
       </div>
     </div>

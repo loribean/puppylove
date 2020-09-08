@@ -4,7 +4,7 @@ export default class Profile extends React.Component {
     render(){
 
 
-        let username = this.props.data[0].username;
+        let username = this.props.username;
         let url ="/dogs/";
         let matchesUrl = "/matches/"+this.props.id
 
