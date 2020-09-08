@@ -223,9 +223,10 @@ let timeline = (request,response) => {
 
             let obj = populate(populateData);
             let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",obj.id);
+            let dogCookie = response.cookie("iddog",obj.id);
             let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
+            console.log(obj)
         }}
         })
 
@@ -234,7 +235,7 @@ let timeline = (request,response) => {
 
 let swipe =  (request,response) => {
     let user_id = parseInt(request.cookies["session"]);
-    let dog_id = parseInt(request.cookies["dogCookie"]);
+    let dog_id = parseInt(request.cookies["iddog"]);
     let dogBot = request.cookies["dogName"];
     let dogBot2 = request.cookies["userInfo"];
     let defaultMsg ='THIS IS THE START OF YOUR CONVERSATION';
@@ -249,7 +250,7 @@ let swipe =  (request,response) => {
                 response.send("oh no! something went wrong");
             } else{
             let obj = populate(populateData);
-            let dogCookie = response.cookie("dogCookie",obj.id);
+            let id = response.cookie("iddog",obj.id);
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
                 response.send("out of dogs")
@@ -269,7 +270,7 @@ let swipe =  (request,response) => {
             } else{
 
             let obj = populate(populateData);
-            let dogCookie = response.cookie("dogCookie",obj.id);
+            let id = response.cookie("iddog",obj.id);
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
             response.send("out of dogs to swipe. try again later")
