@@ -4,7 +4,6 @@ class Submitdog extends React.Component {
 
   render() {
 
-
     return (
               <html>
         <head>
@@ -17,6 +16,7 @@ class Submitdog extends React.Component {
         </head>
 
           <body>
+
                     <div className="container-fluid">
                       <div className="row no-gutter">
                         <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>

@@ -24,7 +24,7 @@ module.exports = (app, allModels) => {
   app.get('/timeline',puppyControllerCallbacks.timeline);
   app.post('/swipe',puppyControllerCallbacks.swipe);
   app.get('/matches/:id',puppyControllerCallbacks.getOrgMatches);
-  app.get('/messages/:yourid/:otherid',puppyControllerCallbacks.getMessages);
+   app.get('/messages/:yourid/:otherid',puppyControllerCallbacks.getMessages);
   app.post('/messages/:senderid/:recipientid',puppyControllerCallbacks.postMessages);
    app.get('/chat/:id',puppyControllerCallbacks.getMessagesUser);
    app.post('/chathist/:id',puppyControllerCallbacks.postMessagesUser);

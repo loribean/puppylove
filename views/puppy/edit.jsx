@@ -5,6 +5,8 @@ class Edit extends React.Component {
   render() {
      let {name,org_id,description,img,age,gender,hdb_approved} = this.props.data[0];
 
+     let url = "/dashboard/"+org_id
+
 
     return (
                <html>
@@ -18,6 +20,22 @@ class Edit extends React.Component {
         </head>
 
           <body>
+           <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div className="container">
+      <a className="navbar-brand" href="/">Puppy Love</a>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarResponsive">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href={url}>Dashboard</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
                     <div className="container-fluid">
                       <div className="row no-gutter">
                         <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>

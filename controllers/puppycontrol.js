@@ -117,7 +117,8 @@ console.log(values)
             console.log('Error at postDog---', err.message)
         } else{
 
-            response.send("Success "+ userName+ '<a href ="/"> Back to Dashboard?</a>')
+            let obj = {name: userName, id: org_id}
+            response.render("puppy/successdog",obj)
         }
         })
 
@@ -134,7 +135,8 @@ let postAccountUser = (request,response) =>{
         if(err){
             response.send("oh no! something went wrong");
         } else{
-            response.redirect("/login/user")
+
+            response.render('puppy/successuser')
 
         }
         })
@@ -151,7 +153,8 @@ let postAccountOrg = (request,response) =>{
         if(err){
             response.send("oh no! something went wrong");
         } else{
-            response.send('Success! <a href ="/login/org"> Login Now?</a>')
+
+            response.render('puppy/successregorg')
         }
         })
 }
@@ -221,8 +224,9 @@ console.log(values)
         if(err){
             console.log('Error at postEditDog---', err.message)
         } else{
+            let obj = {id: orgId, name: userName}
 
-            response.send("Success you edited your dog"+ userName+ '<a href ='+url+'> Back to Dashboard?</a>')
+            response.render("puppy/successdog",obj)
         }
         })
 
@@ -253,12 +257,12 @@ let timeline = (request,response) => {
 
     db.puppy.getTimeline(values,(err,result)=>{
         if(err){
-            response.send("you have run out of dogs to swipe. try again later?")
+            response.send("Something went wrong")
         } else{
             console.log(result.rows)
             populateData = result.rows;
             if(populateData.length <1){
-                response.send("you have run out of dogs to swipe. try again later?")
+                response.render("puppy/out")
             } else {
 
             let obj = populate(populateData);
@@ -296,7 +300,7 @@ let swipe =  (request,response) => {
             let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
-                response.send("out of dogs")
+                response.render("puppy/out")
             }else{
 
 
@@ -317,7 +321,7 @@ let swipe =  (request,response) => {
             let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
-            response.send("out of dogs to swipe. try again later")
+            response.render("puppy/out")
             } else {
                  console.log(populateData, "this is data AFTER function");
 
@@ -345,6 +349,7 @@ let getOrgMatches =(request,response)=> {
 }
 
 let getMessages =(request,response)=> {
+
     let values = [request.params.yourid, request.params.otherid];
 
     db.puppy.getMessaged(values,(err,result)=>{
@@ -394,7 +399,7 @@ let getMessagesUser =(request,response)=> {
 }
 
 let postMessagesUser =(request,response)=> {
-    let user_id = request.cookies['session']
+    let user_id = request.cookies["session"]
 
     let values = [user_id, request.params.id, request.body.sender_name,request.body.recipient_name,request.body.content ];
     db.puppy.postMessagedUser(values,(err,result)=>{
@@ -434,6 +439,10 @@ let getAllConversationsUser =(request,response)=> {
 let logout  = (request,response)=> {
     response.clearCookie('authOrg');
     response.clearCookie('authUser');
+    response.clearCookie('session');
+    response.clearCookie('userInfo');
+    response.clearCookie('orgInfo');
+    response.clearCookie('sessionOrg')
     response.redirect('/');
 }
 

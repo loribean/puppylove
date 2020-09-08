@@ -13,9 +13,26 @@ class Login extends React.Component {
               <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet"/>
   <link href="/index.css" rel="stylesheet"/>
+
         </head>
 
           <body>
+          <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div className="container">
+      <a className="navbar-brand" href="/">Puppy Love</a>
+      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </button>
+      <div className="collapse navbar-collapse" id="navbarResponsive">
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item">
+            <a className="nav-link" href="/">Home</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
                     <div className="container-fluid">
                       <div className="row no-gutter">
                         <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
