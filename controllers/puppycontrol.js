@@ -223,7 +223,7 @@ let timeline = (request,response) => {
 
             let obj = populate(populateData);
             let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",dogId);
+            let dogCookie = response.cookie("dogCookie",obj.id);
             let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
         }}
