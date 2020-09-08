@@ -222,7 +222,7 @@ let timeline = (request,response) => {
             } else {
 
             let obj = populate(populateData);
-
+            console.log(obj.id)
 
             let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
             console.log(dogCookie)
