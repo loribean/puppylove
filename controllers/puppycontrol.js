@@ -233,13 +233,15 @@ let timeline = (request,response) => {
 
 
 let swipe =  (request,response) => {
-    let user_id = request.cookies["session"];
-    let dog_id = request.cookies["dogCookie"];
+    let user_id = parseInt(request.cookies["session"]);
+    let dog_id = parseInt(request.cookies["dogCookie"]);
     let dogBot = request.cookies["dogName"];
     let dogBot2 = request.cookies["userInfo"];
     let defaultMsg ='THIS IS THE START OF YOUR CONVERSATION';
     let values = [dog_id,user_id];
-    let value = [dog_id,user_id,dogBot,dogBot2,defaultMsg]
+    let value = [dog_id,user_id,dogBot,dogBot2,defaultMsg];
+    console.log(values);
+
 
     if(request.body.swipe === 'like'){
         db.puppy.postSwipeLike(values,value,(err,result)=>{
@@ -252,7 +254,7 @@ let swipe =  (request,response) => {
             if(populateData.length <1){
                 response.send("out of dogs")
             }else{
-            console.log(populateData, "this is data AFTER function");
+
 
             response.render('puppy/timeline',obj)
             }
