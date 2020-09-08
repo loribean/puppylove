@@ -223,8 +223,9 @@ let timeline = (request,response) => {
 
             let obj = populate(populateData);
 
-            console.log(obj)
+
             let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
+            console.log(dogCookie)
             let dogName = response.cookie("dogName",obj.name)
             response.render('puppy/timeline',obj)
             console.log(obj)
