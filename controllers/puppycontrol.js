@@ -295,13 +295,14 @@ let swipe =  (request,response) => {
             if(err){
                 response.send("oh no! something went wrong");
             } else{
-            let obj = populate(populateData);
-            let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
-            let dogName = response.cookie("dogName",obj.name);
+
             if(populateData.length <1){
                 response.render("puppy/out")
             }else{
+                let obj = populate(populateData);
+                let dogId = obj.id;
+            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
+            let dogName = response.cookie("dogName",obj.name);
 
 
             response.render('puppy/timeline',obj)
@@ -316,14 +317,15 @@ let swipe =  (request,response) => {
                response.send("oh no! something went wrong");
             } else{
 
-            let obj = populate(populateData);
-            let dogId = obj.id;
-            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
-            let dogName = response.cookie("dogName",obj.name);
             if(populateData.length <1){
             response.render("puppy/out")
             } else {
                  console.log(populateData, "this is data AFTER function");
+
+            let obj = populate(populateData);
+            let dogId = obj.id;
+            let dogCookie = response.cookie("dogCookie",JSON.stringify(obj.id),{ maxAge: 900000});
+            let dogName = response.cookie("dogName",obj.name);
 
             response.render('puppy/timeline',obj)
             }
