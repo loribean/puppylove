@@ -1,5 +1,8 @@
 # ABOUT PUPPY LOVE
 
+Inspiration:
+Adopting a Singapore Special is pretty challenging process. Multiple barriers to entry as potential adoptees need to follow many accounts/adoption drives. Hard to find a perfect match.
+
 Description:
 
 Welcome to Puppy Love! A tinder style pet adoption web application that makes the process of adopting a dog and putting a dog up for adoption easier.
@@ -22,7 +25,9 @@ Make sure you have postgres SQL installed on your machine.
 on your terminal, 
 createdb puppy
 
-Change the user to your own user name on your machine.
+Change the user in db.js to your own user name on your machine.
+
+On your terminal
 psql -d puppy -U yourname -f tables.sql
 psql -d puppy -U yourname -f seed.sql
 
