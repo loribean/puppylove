@@ -40,7 +40,7 @@ export default class Successdog extends React.Component {
       <div className="container">
         <h1 className="masthead-heading mb-0">Success!</h1>
         <h2 className="masthead-subheading mb-0">{name}</h2>
-        <a href={url} className="btn btn-primary btn-xl rounded-pill mt-5">Back to dashboard?</a>
+        <a href='/dashboard/org' className="btn btn-primary btn-xl rounded-pill mt-5">Back to dashboard?</a>
       </div>
     </div>
     <div className="bg-circle-1 bg-circle"></div>

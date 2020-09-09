@@ -60,7 +60,7 @@ let id = request.cookies['sessionOrg'];
     if(!authOrg){
     response.render('puppy/loginorg')
 } else {
-    response.redirect(`/dashboard/org/${id}`)
+    response.redirect("/dashboard/org")
 }
 };
 
@@ -79,7 +79,7 @@ let postLogInOrg =  (request, response) => {
             let sessionid = orgInfo.id;
             let authOrg = sha256(sessionid+ SALT)
             let authOrgCookie = response.cookie("authOrg",authOrg, { maxAge: 900000});
-            let url = '/dashboard/org/'+sessionid;
+            let url = '/dashboard/org/';
             let userName = orgInfo.username;
             let loginCookie = response.cookie("sessionOrg",sessionid, { maxAge: 900000});
             let orgCookie = response.cookie("orgInfo",userName, { maxAge: 900000});
@@ -170,7 +170,7 @@ let getDashboard =(request,response)=> {
         } else{
 
             let data = result.rows;
-            let info = {'data': data, 'id':request.params.id, 'username':username};
+            let info = {'data': data, 'id':orgId, 'username':username};
 
             response.render('puppy/profile', info)
         }

@@ -45,7 +45,7 @@ export default class Matches extends React.Component {
  <div>
   <nav className="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div className="container">
-      <a className="navbar-brand" href="/">Puppy Love</a>
+      <a className="navbar-brand" href='/dashboard/org/'>Puppy Love</a>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -56,6 +56,9 @@ export default class Matches extends React.Component {
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/logout">Logout</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/dashboard/org">dashboard</a>
           </li>
         </ul>
       </div>

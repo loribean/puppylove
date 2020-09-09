@@ -17,7 +17,7 @@ module.exports = (app, allModels) => {
   app.post('/signed/user', puppyControllerCallbacks.postAccountUser);
   app.get('/register/org', puppyControllerCallbacks.createAccountOrg);
   app.post('/signed/org', puppyControllerCallbacks.postAccountOrg);
-  app.get('/dashboard/org/:id', puppyControllerCallbacks.getDashboard);
+  app.get('/dashboard/org', puppyControllerCallbacks.getDashboard);
   app.get('/dogs/:id', puppyControllerCallbacks.indivDog);
   app.get('/dogs/edit/:id', puppyControllerCallbacks.editDog);
   app.put('/postededit', puppyControllerCallbacks.postEditDog);
