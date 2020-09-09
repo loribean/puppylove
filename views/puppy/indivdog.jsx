@@ -30,6 +30,9 @@ let url = "/dogs/edit/"+id
           <li className="nav-item">
             <a className="nav-link" href="/submitdog">Enter a new dog!</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/dashboard/org">Dashboard</a>
+          </li>
         </ul>
       </div>
     </div>

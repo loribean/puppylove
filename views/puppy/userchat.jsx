@@ -91,7 +91,7 @@ export default class Userchats extends React.Component {
 
                   <br/>
                   <br/>
-                  <input type="submit" value ="send"/>
+                  <input type="submit" className= "btn-primary rounded-pill" value ="send"/>
                   </form>
       </div>
     </div>
